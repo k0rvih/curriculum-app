@@ -1,5 +1,8 @@
 pipeline {
   agent any
+  environment {
+    DOCKERHUB_CREDENTIALS = 'credentials('dockerhub_id') '
+  }
   stages {
     stage('Checkout Code') {
       steps {
@@ -20,19 +23,15 @@ pipeline {
     }
 
     stage('Log into Dockerhub') {
-      agent any
-      environment {
-        DOCKERHUB_CREDENTIALS = 'credentials(\'dockerhub_id\') '
-      }
       steps {
-        sh '''sh \'echo $DOCKERHUB_CREDENTIALS_PSW | sudo docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin\'                		
-echo \'Login Completed\''''
+        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | sudo docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin\'                		
+        echo 'Login Completed'
       }
     }
 
     stage('Push') {
       steps {
-        sh 'docker push fuze365/curriculum-front:latest'
+        sh 'docker push k0rvih/curriculum-front:$BUILD_NUMBER'
       }
     }
 
