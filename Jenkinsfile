@@ -18,7 +18,7 @@ pipeline {
 
     stage('Build') {
       steps {
-        sh 'docker build -f curriculum-front/Dockerfile -t k0rvih/curriculum-front:latest .'
+        sh 'docker build -f curriculum-front/Dockerfile -t k0rvih/curriculum-front:$BUILD_NUMBER .'
       }
     }
 
