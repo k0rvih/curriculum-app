@@ -20,12 +20,13 @@ pipeline {
     }
 
     stage('Log into Dockerhub') {
+      agent any
       environment {
-        DOCKERHUB_USER = 'fuze365'
-        DOCKERHUB_PASSWORD = 'gv1&3Ea9W##onDQAMUG&41CvZ7h1d1'
+        DOCKERHUB_CREDENTIALS = 'credentials(\'dockerhub_id\') '
       }
       steps {
-        sh 'docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASSWORD'
+        sh '''sh \'echo $DOCKERHUB_CREDENTIALS_PSW | sudo docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin\'                		
+echo \'Login Completed\''''
       }
     }
 
